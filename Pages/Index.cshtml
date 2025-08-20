@@ -1,0 +1,16 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<h1>Welcome to .NET 8 Web Application!</h1>
+<p>This is a simple index page.</p>
+
+@if (User.Identity?.IsAuthenticated ?? false)
+{
+    <p>Hello @User.Identity.Name! <a asp-page="/Logout">Logout</a></p>
+}
+else
+{
+    <a asp-page="/Login">Login</a>
+}
