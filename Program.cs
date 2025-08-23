@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using RequestApp.Code.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,16 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 builder.Services.AddAuthorization();
+
+builder.Services.AddSingleton<ISongRepository>(provider =>
+{
+    var dbPath = "requests.db"; // Or from config
+    var repo = new SongRepository(dbPath);
+    // Initialize DB here (see below for async way)
+    repo.InitDbAsync().GetAwaiter().GetResult();
+    return repo;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

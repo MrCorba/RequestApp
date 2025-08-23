@@ -1,19 +1,24 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using RequestApp.Code.Models;
+using RequestApp.Code.Repository;
 
 namespace RequestApp.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
+    private readonly ISongRepository _repo;
+    public IList<Song> Songs { get;set; } = default!;
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public IndexModel(ISongRepository repo)
     {
-        _logger = logger;
+        this._repo = repo;
     }
 
-    public void OnGet()
-    {
+     public async Task OnGetAsync()
+        {
+            await this._repo.AddSongAsync("Title", "Artist");
 
-    }
+            Songs = await this._repo.GetAllSongsAsync();
+        }
 }

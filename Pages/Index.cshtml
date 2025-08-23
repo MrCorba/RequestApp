@@ -3,14 +3,40 @@
 @{
     ViewData["Title"] = "Home page";
 }
-<h1>Welcome to .NET 8 Web Application!</h1>
-<p>This is a simple index page.</p>
-
-@if (User.Identity?.IsAuthenticated ?? false)
-{
-    <p>Hello @User.Identity.Name! <a asp-page="/Logout">Logout</a></p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Songs[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Songs[0].Artist)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Songs[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Songs[0].Played)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Songs) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Artist)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Played)
+            </td>
+        </tr>
 }
-else
-{
-    <a asp-page="/Login">Login</a>
-}
+    </tbody>
+</table>
