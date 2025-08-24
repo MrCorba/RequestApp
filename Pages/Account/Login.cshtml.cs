@@ -11,7 +11,12 @@ public class LoginModel : PageModel
     [BindProperty]
     public string Password { get; set; }
 
-    public void OnGet() { }
+    [BindProperty(SupportsGet = true)]
+    public string? ReturnUrl { get; set; }
+
+    public void OnGet()
+    {
+    }
 
     public async Task<IActionResult> OnPostAsync()
     {
@@ -25,7 +30,12 @@ public class LoginModel : PageModel
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-            return RedirectToPage("/Index");
+
+            if (string.IsNullOrEmpty(this.ReturnUrl))
+            {
+                return RedirectToPage("/Index");
+            }
+            return Redirect(this.ReturnUrl);
         }
         ModelState.AddModelError(string.Empty, "Invalid login attempt.");
         return Page();

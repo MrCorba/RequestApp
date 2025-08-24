@@ -1,10 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RequestApp.Code.Models;
 using RequestApp.Code.Repository;
 
 namespace RequestApp.Pages;
-
+[Authorize]
 public class AdminModel : PageModel
 {
     private readonly ISongRepository _repo;
