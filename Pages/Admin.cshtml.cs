@@ -5,7 +5,6 @@ using RequestApp.Code.Repository;
 
 namespace RequestApp.Pages;
 
-
 public class AdminModel : PageModel
 {
     private readonly ISongRepository _repo;
@@ -33,5 +32,10 @@ public class AdminModel : PageModel
     public class InputId
     {
         public int Id { get; set; }
+    }
+
+    public static string BoolToString(bool val)
+    {
+        return val ? "yes" : "no";
     }
 }

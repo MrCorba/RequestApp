@@ -34,7 +34,7 @@
 
                 @foreach ((var s, int count) in Model.Songs)
                 {
-                    <tr>
+                    <tr data-played=@AdminModel.BoolToString(s.Played)>
                         <td>@s.Artist</td>
                         <td>@s.Title</td>
                         <td><span class="badge bg-primary">@count</span></td>
