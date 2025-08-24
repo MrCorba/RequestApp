@@ -18,8 +18,6 @@ public class AdminModel : PageModel
 
      public async Task OnGetAsync()
         {
-            await this._repo.AddSongAsync("Title", "Artist");
-
             Songs = await this._repo.GetAllSongsAsync();
         }
 }

@@ -3,40 +3,24 @@
 @{
     ViewData["Title"] = "Home page";
 }
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Songs[0].Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Songs[0].Artist)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Songs[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Songs[0].Played)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Songs) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Artist)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Played)
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h1 class="fw-bold">🎶 Request a Song</h1>
+        <p class="text-muted">Tell the DJ what you want to hear!</p>
+    </div>
+
+    <form method="post" class="card shadow-sm p-4 bg-body rounded">
+        <div class="mb-3">
+            <label asp-for="Input.Artist" class="form-label"></label>
+            <input asp-for="Input.Artist" class="form-control"/>
+        </div>
+        <div class="mb-3">
+           <label asp-for="Input.Title" class="form-label"></label>
+            <input asp-for="Input.Title" class="form-control"/>
+        </div>
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-lg">Submit Request</button>
+        </div>
+    </form>
+</div>
