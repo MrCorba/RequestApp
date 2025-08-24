@@ -3,3 +3,60 @@
 @{
     ViewData["Title"] = "Home page";
 }
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h1 class="fw-bold">🎧 DJ Dashboard</h1>
+        <p class="text-muted">Manage incoming song requests</p>
+    </div>
+
+    <!-- Filter and Sort Controls -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="showUnplayedOnly">
+            <label class="form-check-label" for="showUnplayedOnly">
+                Show Unplayed Only
+            </label>
+        </div>
+    </div>
+
+    <div class="table-responsive card shadow-sm p-4 bg-body rounded">
+        <table class="table align-middle table-hover" id="songsTable">
+            <thead class="table-light">
+                <tr>
+                    <th>Artist</th>
+                    <th>Title</th>
+                    <th>Requested</th>
+                    <th>Played</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+@foreach (var s in Model.Songs) {
+                <tr>
+                    <td>@s.Artist</td>
+                    <td>@s.Title</td>
+                    <td><span class="badge bg-primary">0</span></td>
+                    <td>
+                    @if (s.Played) {
+                            <span class="badge bg-success">Yes</span>
+                    } else {
+                            <span class="badge bg-secondary">No</span>
+                    }
+                    </td>
+                    <td>
+                    @if (s.Played) {
+                        <form method="post" style="display:inline;">
+                            <input type="hidden" name="played" value="@s.Id">
+                            <button type="submit" class="btn btn-sm btn-outline-success">Mark as Played</button>
+                        </form>
+                    } else {
+                        <span class="text-muted small">Played</span>
+                    }
+                    </td>
+                </tr>
+}
+            </tbody>
+        </table>
+    </div>
+</div>

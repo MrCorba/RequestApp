@@ -5,7 +5,7 @@ using RequestApp.Code.Repository;
 
 namespace RequestApp.Pages;
 
-[Authorize]
+
 public class AdminModel : PageModel
 {
     private readonly ISongRepository _repo;
