@@ -8,6 +8,8 @@ namespace RequestApp.Pages;
 public class IndexModel : PageModel
 {
     private readonly ISongRepository _repo;
+    [TempData]
+    public string? SuccessMessage { get; set; }
 
     public IndexModel(ISongRepository repo)
     {
@@ -16,17 +18,21 @@ public class IndexModel : PageModel
 
     public async Task OnGetAsync()
     {
-            
+
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!ModelState.IsValid) {
+        if (!ModelState.IsValid)
+        {
             return Page();
         }
 
         await this._repo.AddSongAsync(Input.Artist, Input.Title);
-       return Page();;
+        Input = new();
+
+        SuccessMessage = "Thanks for your request! The DJ has been notified.";
+        return RedirectToPage();
     }
 
     [BindProperty]

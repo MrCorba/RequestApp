@@ -9,15 +9,18 @@
         <h1 class="fw-bold">🎶 Request a Song</h1>
         <p class="text-muted">Tell the DJ what you want to hear!</p>
     </div>
-
+    @if (Model.SuccessMessage != null)
+    {
+        <div class="alert alert-success">@Model.SuccessMessage</div>
+    }
     <form method="post" class="card shadow-sm p-4 bg-body rounded">
         <div class="mb-3">
             <label asp-for="Input.Artist" class="form-label"></label>
-            <input asp-for="Input.Artist" class="form-control"/>
+            <input asp-for="Input.Artist" class="form-control" />
         </div>
         <div class="mb-3">
-           <label asp-for="Input.Title" class="form-label"></label>
-            <input asp-for="Input.Title" class="form-control"/>
+            <label asp-for="Input.Title" class="form-label"></label>
+            <input asp-for="Input.Title" class="form-control" />
         </div>
         <div class="d-grid">
             <button type="submit" class="btn btn-primary btn-lg">Submit Request</button>

@@ -32,30 +32,37 @@
             </thead>
             <tbody>
 
-@foreach (var s in Model.Songs) {
-                <tr>
-                    <td>@s.Artist</td>
-                    <td>@s.Title</td>
-                    <td><span class="badge bg-primary">0</span></td>
-                    <td>
-                    @if (s.Played) {
-                            <span class="badge bg-success">Yes</span>
-                    } else {
-                            <span class="badge bg-secondary">No</span>
-                    }
-                    </td>
-                    <td>
-                    @if (s.Played) {
-                        <form method="post" style="display:inline;">
-                            <input type="hidden" name="played" value="@s.Id">
-                            <button type="submit" class="btn btn-sm btn-outline-success">Mark as Played</button>
-                        </form>
-                    } else {
-                        <span class="text-muted small">Played</span>
-                    }
-                    </td>
-                </tr>
-}
+                @foreach ((var s, int count) in Model.Songs)
+                {
+                    <tr>
+                        <td>@s.Artist</td>
+                        <td>@s.Title</td>
+                        <td><span class="badge bg-primary">@count</span></td>
+                        <td>
+                            @if (s.Played)
+                            {
+                                <span class="badge bg-success">Yes</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">No</span>
+                            }
+                        </td>
+                        <td>
+                            @if (!s.Played)
+                            {
+                                <form method="post" style="display:inline;">
+                                    <input asp-for="Input.Id" class="form-control" value="@s.Id" type="hidden"/>
+                                    <button type="submit" class="btn btn-sm btn-outline-success">Mark as Played</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <span class="text-muted small">Played</span>
+                            }
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
