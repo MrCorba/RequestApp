@@ -17,10 +17,12 @@
         <div class="mb-3">
             <label asp-for="Input.Artist" class="form-label"></label>
             <input asp-for="Input.Artist" class="form-control" />
+            <span asp-validation-for="Input.Artist" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="Input.Title" class="form-label"></label>
             <input asp-for="Input.Title" class="form-control" />
+            <span asp-validation-for="Input.Title" class="text-danger"></span>
         </div>
         <div class="d-grid">
             <button type="submit" class="btn btn-primary btn-lg">Submit Request</button>

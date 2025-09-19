@@ -8,6 +8,7 @@ namespace RequestApp.Pages;
 public class IndexModel : PageModel
 {
     private readonly ISongRepository _repo;
+
     [TempData]
     public string? SuccessMessage { get; set; }
 
@@ -16,15 +17,21 @@ public class IndexModel : PageModel
         this._repo = repo;
     }
 
-    public async Task OnGetAsync()
-    {
-
-    }
+    public async Task OnGetAsync() { }
 
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
+            if (string.IsNullOrEmpty(Input.Artist))
+            {
+                ModelState.AddModelError("Artist", "Please supply an artist");
+            }
+
+            if (string.IsNullOrEmpty(Input.Title))
+            {
+                ModelState.AddModelError("Title", "Please supply an title");
+            }
             return Page();
         }
 
