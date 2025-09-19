@@ -1,43 +1,56 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 public class LoginModel : PageModel
 {
     [BindProperty]
     public string Username { get; set; }
+
     [BindProperty]
     public string Password { get; set; }
 
     [BindProperty(SupportsGet = true)]
     public string? ReturnUrl { get; set; }
 
-    public void OnGet()
+    private readonly IConfiguration _configuration;
+
+    public LoginModel(IConfiguration configuration)
     {
+        _configuration = configuration;
     }
+
+    public void OnGet() { }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        // Basic username/password check (for demo purposes, use secure method in production!)
-        if (Username == "user" && Password == "password")
+        if (
+            Username != "admin"
+            || string.IsNullOrEmpty(Password)
+            || Password != _configuration["AdminPassword"]
+        )
         {
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, Username)
-            };
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-
-            if (string.IsNullOrEmpty(this.ReturnUrl))
-            {
-                return RedirectToPage("/Index");
-            }
-            return Redirect(this.ReturnUrl);
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            return Page();
         }
-        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-        return Page();
+
+        var claims = new List<Claim> { new Claim(ClaimTypes.Name, Username) };
+        var claimsIdentity = new ClaimsIdentity(
+            claims,
+            CookieAuthenticationDefaults.AuthenticationScheme
+        );
+
+        await HttpContext.SignInAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            new ClaimsPrincipal(claimsIdentity)
+        );
+
+        if (string.IsNullOrEmpty(this.ReturnUrl))
+        {
+            return RedirectToPage("/Index");
+        }
+        return Redirect(this.ReturnUrl);
     }
 }
